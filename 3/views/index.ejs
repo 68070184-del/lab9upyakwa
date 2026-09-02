@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h2>ระบบติดตามคำสั่งซื้อ</h2>
+            <form action="/add" method="post">
+                <input type="text" placeholder="ชื่อลูกค้า" name="customer">
+                <input type="text" placeholder="รายการสินค้า" name="item">
+                <input type="text" placeholder="ที่อยู่" name="address">
+                <input type="text" placeholder="เบอร์โทร" name="tel">
+                <button type="submit">เพื่มคำสั่งซื้อ</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>รายการคำสั่งซื้อ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ลูกค้า</th>
+                        <th>สินค้า</th>
+                        <th>สถานะ</th>
+                        <th>เปลี่ยนสถานะ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(row => { %>
+                        <tr>
+                            <td><%= row.id %></td>
+                            <td><%= row.name %></td>
+                            <td><%= row.product %></td>
+                            <td><%= row.status %></td>
+                            <td>
+                                <form action="/update/<%= row.id %>" method="post">
+                                    <select name="status" id="status">
+                                        <option value="รอดำเนินการ" <%= row.status === "รอดำเนินการ" ? 'selected' : '' %>>รอดำเนินการ</option>
+                                        <option value="กำลังจัดส่ง" <%= row.status === "กำลังจัดส่ง" ? 'selected' : '' %>>กำลังจัดส่ง</option>
+                                        <option value="จัดส่งแล้ว" <%= row.status === "จัดส่งแล้ว" ? 'selected' : '' %>>จัดส่งแล้ว</option>
+                                    </select>
+                                    <button>อัพเดท</button>
+                                </form>
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
